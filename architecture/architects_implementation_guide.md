@@ -51,13 +51,22 @@ graph TD
 
 ## 3. Technical Strategy
 
-### 3.1 Google Workspace Migrate (GWM) Scaling
-To meet the aggressive April deadline, we will deploy a **Sharded Bridge Architecture** to bypass the undocumented bridge performance limits.
+### 3.1 GWM Delivery Strategy: "Sharded Bridge Model"
+To meet the April deadline for 5,000 users, we must choose between the standard and high-throughput models.
 
-*   **Infrastructure**: 10x `n1-standard-8` nodes managed via Terraform.
-*   **Sharding Logic**:
-    *   **Maximum Users per Bridge**: 100
-    *   **Total Bridges**: ~50
+**Option A: Standard Topology (Rejected)**
+*   *Architecture*: 1 Platform, 1-5 Bridges.
+*   *Throughput*: ~200-500 GB/day.
+*   *Risk*: High. A single "poison" item can stall an entire bridge queue.
+*   *Timeline Impact*: Would require ~4-5 months.
+
+**Option B: Sharded Bridge Topology (Selected)**
+*   *Architecture*: 1 Platform, **50 Independent Bridges**.
+*   *Logic*: Each bridge is assigned a static batch of 100 users.
+*   *Throughput*: ~2-3 TB/day (Parallelized).
+*   *Risk*: Low. A failure in Bridge #12 only affects users 1200-1299.
+*   *Execution*:
+    *   **Infrastructure**: 10x `n2-standard-16` nodes (hosting 5 bridges each).
     *   **Assignment**: Automated via PowerShell (`Assign-UserBatch.ps1`).
 
 ### 3.2 Data Fidelity & "The OneNote Gap"
