@@ -48,9 +48,24 @@ Before executing the checklist, confirm the chosen delivery model.
 - [ ] **Delta Sync 2**: Recent items.
     - *Timing*: T-Minus 1 week.
 - [ ] **Cutover Sync (Final Delta)**: The "weekend" run.
+- [ ] **Verify Mailbox Item Counts**: Run `strategy/mailbox_verification.md` procedure.
 - [ ] **Error Remediation**: Retry failed items >3 times before flagging.
 
-## 5. Phase 4: Post-Migration Administration
+## 5. Phase 4: Workbook Compliance & Certification Readiness
+*Ensuring the environment matches the "Administrator Journey" standards.*
+
+### 5.1 Object Management
+- [ ] **Intern Provisioning**: Verify CSV upload process for users without AD accounts.
+- [ ] **Compromised Account Protocol**: Test `secure_compromised_user` function (Revoke tokens, Wipe device).
+- [ ] **Shared Drive Rights**: Confirm "Senior Trainers" have Manager access; "Juniors" have Contributor.
+
+### 5.2 Security & Services
+- [ ] **Data Regions**: Verify `OU/Research/EU_Lab` is pinned to "Europe".
+- [ ] **Context-Aware Access**: Attempt login from non-Partner IP to verify block.
+- [ ] **MDM Enforcement**: Enroll test Android folder and verify 15-min screen lock policy.
+- [ ] **Gmail Routing**: Validate SMTP Relay TLS enforcement for legacy printers.
+
+## 6. Phase 5: Post-Migration Administration
 *Technical Goal*: Stabilize the new environment.*
 
 - [ ] **MX Record Swing**: Switch mail flow to Google.

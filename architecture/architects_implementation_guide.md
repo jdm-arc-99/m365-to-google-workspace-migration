@@ -107,3 +107,16 @@ Service Accounts are strictly scoped using the principle of least privilege.
 ### 5.2 Verification Standard
 *   **Automated**: <1% Item Count Variance (Source vs. Target).
 *   **Manual**: "White Glove" verification of Calendar Resources and Recurring Meetings for VIPs.
+
+## 6. Administrative Readiness (Workbook Alignment)
+To ensure the environment consists of "Gold Standard" configurations per the *Reference Workbook*:
+
+### 6.1 Object Management
+*   **Provisioning**: Bulk CSV automation for non-AD users (Interns).
+*   **Groups**: Strict interaction policies (e.g., "Announcement Only" for Marketing).
+*   **Shared Drives**: Function-based permissions (Manager vs Contributor).
+
+### 6.2 Security Posture
+*   **Data Residency**: Policies enforcing EU storage for `OU/Research/EU_Lab`.
+*   **Context-Aware Access**: Partner access restricted to specific IP subnets.
+*   **Mobile Security**: "Advanced" MDM profile with auto-wipe on 5 failures.
