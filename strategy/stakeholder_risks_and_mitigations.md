@@ -2,6 +2,19 @@
 
 This document outlines common data fidelity gaps, process pitfalls, and stakeholder concerns encountered during migration from Microsoft 365 to Google Workspace. It serves as a reference for setting expectations and planning mitigations.
 
+## 🚨 Executive Summary: Top 3 Critical Gaps & Mitigations
+
+If you remember nothing else, plan for these three risks:
+
+1.  **Mailbox Throttling:** M365 aggressively throttles data exits.
+    *   *Mitigation:* Use multiple Service Accounts (not just one) and request a temporary EWS policy lift from Microsoft Support.
+2.  **OneDrive/SharePoint Permissions:** Complex permission inheritance does *not* translate to Google Drive.
+    *   *Mitigation:* Do not "lift and shift" directly to My Drive. Flatten file structures and migrate departmental data to **Shared Drives** which have cleaner, group-based permissions.
+3.  **OneNote Incompatibility:** OneNote notebooks cannot be directly converted to Google formats with high fidelity.
+    *   *Mitigation:* Identify heavy OneNote users early. Use a specialized tool (AvePoint/ShareGate) for just those specific users/sites, or convert critical notes to PDF/Docx manually.
+
+---
+
 ## 1. Data Gaps & Limitations
 
 Platform differences between Microsoft and Google architectures make some data types incompatible or difficult to migrate with full fidelity.
