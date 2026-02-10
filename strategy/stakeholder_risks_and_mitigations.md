@@ -170,4 +170,25 @@ Based on diverse migration experiences (Reddit/SysAdmin communities), here are n
 
 
 
+    *   *Exclusion Filter:* `Junk Email`, `Deleted Items`, `RSS Feeds`.
+    *   *Impact:* Can reduce total object count by 20-30%.
+
+## 10. Architect's Reference: Logic & Principles
+
+*For internal use by the Data Architect / Migration Lead.*
+
+### Golden Rules of Migration
+1.  **Identity First:** Never migrate a byte of data until Identity (GCDS/Okta) is 100% stable and verifying daily.
+2.  **Date-Range Strategy:** Migrate data < 1 year old first (The "Hot" data). Migrate older archives ("Cold" data) in a second pass post-cutover. This drastically reduces the cutover window risk.
+3.  **Communication > Technology:** A migration with 5% data loss but excellent communication is a "Success". A migration with 0% data loss but zero communication is a "Failure" (user panic).
+
+### Go / No-Go Thresholds (Cutover Night)
+*   **Green (GO):** >98% of Mail data migrated. >95% of *Active* Drive files migrated. MX TTL reduced to 300s.
+*   **Yellow (GO with Caution):** 95-98% Mail. Key VIPs showing errors. (Decision: Manual "White Glove" support for VIPs).
+*   **Red (NO-GO):** <90% Mail. Identity sync failing. Roll back MX changes.
+
+### Success Metrics (KPIs)
+*   **Velocity:** Avg. transfer rate > 1.5 GB/user/hr.
+*   **Fidelity:** < 0.5% item failure rate (excluding "Junk").
+*   **Adoption:** > 80% of users log in within 24 hours of cutover.
 
