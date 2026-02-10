@@ -24,4 +24,5 @@ Used for mailbox statistics and forwarding configuration.
 ## 3. Azure AD Roles
 - **Global Reader**: Sufficient for most read-only assessment scripts.
 - **User Administrator**: Required if the script creates "Mail Contacts" for co-existence.
+- **Exchange Administrator**: Provides full management access to Exchange Online (equivalent to Organization Management).
 - **Global Administrator**: The "Super Admin" for the entire tenant. Includes full Exchange access implicitly.
