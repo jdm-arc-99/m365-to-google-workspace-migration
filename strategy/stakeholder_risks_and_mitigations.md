@@ -145,5 +145,29 @@ While GWM handles the "heavy lifting" (95% of data), specialized tools empower u
         *   **Email Signatures:** Bulk-push standardized Gmail signatures to all users post-migration.
     *   *Command Example:* `gam all users sync drivefileacl user@example.com` (Fixes access for a specific VIP).
 
+## 9. Community Wisdom & "In-the-Trenches" Tips
+
+Based on diverse migration experiences (Reddit/SysAdmin communities), here are non-obvious tools and scripts to keep handy.
+
+### A. The "Safety Net": Got Your Back (GYB)
+*   **What it is:** A free, open-source command-line tool for backing up and restoring Gmail accounts.
+*   **Why you need it:** If a VIP's migration goes wrong and you need to "wipe and reload" their mailbox without re-running the heavy GWM bridge, GYB is faster for single-user operations.
+*   *Link:* [GAM-team/got-your-back](https://github.com/GAM-team/got-your-back)
+
+### B. PowerShell Pre-Provisioning Script
+*   **The Trap:** GWM can create users, but often fails to license them correctly in time for the data load, causing "Mailbox Not Found" errors.
+*   **The Fix:** Do not rely on the migration tool to create users. Script the creation and licensing of ALL users in Google Workspace 48 hours *before* migration starts.
+*   *Tool:* `Google Cloud Directory Sync (GCDS)` or a simple GAM loop:
+    ```bash
+    gam csv users.csv gam create user ~email firstname ~firstname lastname ~lastname password <random>
+    ```
+
+### C. Folder Exemptions (Speed Hack)
+*   **The Tip:** A massive amount of migration time is wasted on "Junk Email" and "Deleted Items".
+*   **The Fix:** Explicitly configure GWM (or your engine of choice) to **skip** these folders.
+    *   *Exclusion Filter:* `Junk Email`, `Deleted Items`, `RSS Feeds`.
+    *   *Impact:* Can reduce total object count by 20-30%.
+
+
 
 
