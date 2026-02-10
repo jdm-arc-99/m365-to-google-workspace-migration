@@ -52,7 +52,17 @@ Addressing these concerns proactively is crucial for project buy-in.
 *   **Shared Drives for Team Data:** Do not migrate department data to a user's "My Drive". Map SharePoint libraries to Google Shared Drives to enforce cleaner permissions.
 *   **Communication Campaign:** Explicitly warn users about the "Received" header change and broken document links to manage expectations.
 
-## 5. Tooling Strategy & Justification
+## 5. Co-existence & Interoperability Strategy
+
+During the migration (which may span weeks), ensuring seamless communication between M365 and Google Workspace users is critical.
+
+*   **Mail Routing (Split Delivery):** We will configure Split Delivery where Google Workspace acts as the primary gateway, routing messages for non-migrated users back to M365.
+*   **Calendar Co-existence:** We will enable **Google Calendar Interop** to allow bi-directional Free/Busy lookups between Outlook and Google Calendar users.
+
+> [!TIP]
+> For detailed configuration steps on setting up Split Delivery and Calendar Interop, refer to the [Co-existence and Interoperability Guide](coexistence_and_interoperability.md).
+
+## 6. Tooling Strategy & Justification
 
 Stakeholders often ask: *"Why use Google Workspace Migrate (GWM) instead of a SaaS tool like BitTitan MigrationWiz?"*
 
