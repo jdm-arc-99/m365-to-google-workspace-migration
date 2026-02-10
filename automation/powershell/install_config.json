@@ -1,0 +1,16 @@
+{
+  "installerUrls": {
+    "platform": "https://storage.googleapis.com/migration-installers/googleware-migrate-platform.msi",
+    "node": "https://storage.googleapis.com/migration-installers/google-migrate-node.msi",
+    "mysql": "https://storage.googleapis.com/migration-installers/mysql-installer.msi",
+    "couchdb": "https://storage.googleapis.com/migration-installers/couchdb-installer.msi"
+  },
+  "serviceAccounts": {
+    "platform": "gwm-platform-sa@PROJECT_ID.iam.gserviceaccount.com",
+    "node": "gwm-node-sa@PROJECT_ID.iam.gserviceaccount.com"
+  },
+  "databaseConfig": {
+    "mysqlPort": 3306,
+    "couchdbPort": 5984
+  }
+}
