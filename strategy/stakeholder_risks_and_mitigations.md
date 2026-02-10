@@ -79,6 +79,11 @@ During the migration (which may span weeks), ensuring seamless communication bet
 
 Stakeholders often ask: *"Why use Google Workspace Migrate (GWM) instead of a SaaS tool like BitTitan MigrationWiz?"*
 
+> [!TIP]
+> For a detailed, point-by-point breakdown on **Limitations, Public Folders, and Decision Drivers**, see the [Migration Tooling Comparison](migration_tooling_comparison.md).
+
+| Feature | Google Workspace Migrate (GWM) | Third-Party SaaS (e.g., BitTitan) | Decision Driver |
+
 | Feature | Google Workspace Migrate (GWM) | Third-Party SaaS (e.g., BitTitan) | Decision Driver |
 | :--- | :--- | :--- | :--- |
 | **Security & Data Sovereignty** | **High.** binary data streams directly from Source -> Google. No intermediate persistent storage. Data stays within customer-controlled GCP projects. | **Medium.** Data passes through vendor infrastructure. Requires trusting vendor's security posture and compliance certifications. | **Security Compliance.** For strict regulatory environments, keeping data within our controlled perimeter is preferred. |
