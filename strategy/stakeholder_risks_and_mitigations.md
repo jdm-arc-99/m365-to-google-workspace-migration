@@ -110,4 +110,27 @@ Migration is complex, and sometimes the standard path involves roadblocks. Below
     Set-SPOSite -Identity https://tenant-my.sharepoint.com/personal/user_example_com -LockState ReadOnly
     ```
 
+## 8. User-Side & Supplementary Tools
+
+While GWM handles the "heavy lifting" (95% of data), specialized tools empower users to move their own niche data and help Admins fix edge cases.
+
+### A. For Users (Self-Service)
+*   **Google Workspace Migration for Microsoft Outlook (GWMMO):**
+    *   *Best For:* Moving local PST files or re-migrating a specific mailbox that had errors.
+    *   *Deployment:* Push the MSI to users via Endpoint Manager. Users sign in with Google credentials to pull data from their local Outlook profile.
+    *   *Gap Filler:* Excellent for "legacy" email archives stored on user laptops that central IT doesn't see.
+*   **Google Drive for Desktop:**
+    *   *Best For:* Manual drag-and-drop of critical active files.
+    *   *Scenario:* A user has a working folder of 50 complex Excel files. They can drag them directly into `G: > My Drive` to ensure they are available immediately at cutover, bypassing the central queue.
+
+### B. For Admins (Automation & Fixups)
+*   **GAM / GAMADV-XTD3 (Command Line):**
+    *   *The "Swiss Army Knife" for Admins.* GWM migrates data, but GAM cleans up the mess.
+    *   *Key Use Cases:*
+        *   **Fixing Permissions:** "Re-acl" Drive files if shares are broken.
+        *   **Resource Calendars:** Bulk-update room resource settings (capacity, equipment) which don't migrate well.
+        *   **Email Signatures:** Bulk-push standardized Gmail signatures to all users post-migration.
+    *   *Command Example:* `gam all users sync drivefileacl user@example.com` (Fixes access for a specific VIP).
+
+
 
