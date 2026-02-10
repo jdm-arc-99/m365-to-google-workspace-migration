@@ -1,10 +1,9 @@
 # GWM Platform & Node Scopes
 
-When provisioning the Google Workspace Migrate infrastructure via Terraform or gcloud, the following OAuth scopes are **mandatory** for the Service Account attached to the VMs.
+## 1. Google Cloud Platform (Target)
+When provisioning the Google Workspace Migrate infrastructure, the Service Account attached to the GCE VMs must have:
 
-## Platform & Node Service Account Scopes
-The instances must be created with the following scopes to ensure proper logging, monitoring, and API access:
-
+### Platform & Node Service Account Scopes
 - `https://www.googleapis.com/auth/devstorage.read_only` (GCS Access for installers)
 - `https://www.googleapis.com/auth/logging.write` (Cloud Logging)
 - `https://www.googleapis.com/auth/monitoring.write` (Cloud Monitoring)
@@ -12,8 +11,8 @@ The instances must be created with the following scopes to ensure proper logging
 - `https://www.googleapis.com/auth/service.management.readonly`
 - `https://www.googleapis.com/auth/trace.append` (Cloud Trace)
 
-## Application Scopes (Domain-Wide Delegation)
-These must be authorized in the Google Workspace Admin Console for the GWM Service Account Client ID:
+### Domain-Wide Delegation (Workspace Admin Console)
+Authorize the Service Account Client ID for:
 - `https://www.googleapis.com/auth/admin.directory.group`
 - `https://www.googleapis.com/auth/admin.directory.user`
 - `https://www.googleapis.com/auth/admin.directory.domain.readonly`
@@ -22,3 +21,31 @@ These must be authorized in the Google Workspace Admin Console for the GWM Servi
 - `https://www.googleapis.com/auth/calendar`
 - `https://www.googleapis.com/auth/contacts`
 - `https://www.googleapis.com/auth/migrate.deployment.interop`
+
+---
+
+## 2. Microsoft 365 (Source)
+To enable GWM to read all data without "wasting iterations" on permission errors, configure an **Azure AD Application** with the following permissions.
+
+### Application Permissions (Microsoft Graph)
+Grant these in the Azure Portal -> App Registrations -> [Your App] -> API Permissions. **Admin Consent is Required.**
+
+| API / Permission Name | Type | Purpose |
+|-----------------------|------|---------|
+| **Directory.Read.All** | Application | Read users, groups, and organizational structure. |
+| **User.Read.All** | Application | Read full user profiles. |
+| **Files.Read.All** | Application | Read all OneDrive and SharePoint files. |
+| **Sites.Read.All** | Application | Read SharePoint site collections. |
+| **Mail.Read** | Application | Read all mailboxes (Modern Auth). |
+| **Calendars.Read** | Application | Read all calendars. |
+| **Contacts.Read** | Application | Read all contacts. |
+
+### Exchange Online (Impersonation)
+Required for high-fidelity migration of Mail, Calendar, and Contacts via EWS.
+
+1.  Create a **Service Account** in M365 (e.g., `svc-gwm-migration@source-tenant.com`).
+2.  Assign the **ApplicationImpersonation** role in Exchange Admin Center:
+    *   `ECP -> Permissions -> Admin Roles`
+    *   Create `GWM-Impersonation` group.
+    *   Add Role: `ApplicationImpersonation`.
+    *   Add Member: `svc-gwm-migration`.
