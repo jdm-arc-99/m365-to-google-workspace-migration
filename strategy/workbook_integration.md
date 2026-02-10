@@ -3,8 +3,21 @@
 This document maps the "Google Workspace Administrator Journey" workbook sections to our implementation tasks, ensuring all certification-level best practices are applied to the 5,000-user migration.
 
 ## Section 1: Managing Objects
-- **User Lifecycle**: Automated via `automation/gam/setup_workspace.sh` (OUs/Groups).
-- **Directory Sync**: Handled by GCDS (mapped in `architecture/business/ou_group_structure.md`).
+- **Account Lifecycle (1.1)**:
+  - *Scenario*: Intern provisioning without AD.
+  - *Action*: Use Bulk Upload CSV standard (First, Last, Email, OrgUnit).
+  - *Security*: Revoke tokens & wipe devices for compromised accounts (Diagnostic Q2).
+  - *Licensing*: Disable "Automatic Licensing" at Root; Enable at OU level (Diagnostic Q3).
+- **Google Drive (1.2)**:
+  - *Scenario*: Senior Surgical Team (Manager) vs Junior (Contributor).
+  - *Action*: Granular Shared Drive permissions (Manager vs Content Manager vs Contributor).
+  - *External Sharing*: Allowlisted Domains only; Disable "Anyone with the link".
+- **Calendar Resources (1.3)**:
+  - *Scenario*: Facilities Management.
+  - *Action*: Delegate "Make changes to events" to Facility Admins; structured resources.
+- **Groups (1.4)**:
+  - *Scenario*: "Announcement Only" for Marketing; "Custom" for HR.
+  - *Action*: Restrict "Who can contact group owners"; Enable "Allow members outside organization" for specific use cases.
 
 ## Section 2: Configuring Services
 - **Data Regions (2.1)**:
