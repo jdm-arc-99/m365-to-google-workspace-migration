@@ -45,7 +45,36 @@ Required for high-fidelity migration of Mail, Calendar, and Contacts via EWS.
 
 1.  Create a **Service Account** in M365 (e.g., `svc-gwm-migration@source-tenant.com`).
 2.  Assign the **ApplicationImpersonation** role in Exchange Admin Center:
-    *   `ECP -> Permissions -> Admin Roles`
     *   Create `GWM-Impersonation` group.
     *   Add Role: `ApplicationImpersonation`.
     *   Add Member: `svc-gwm-migration`.
+
+## 3. Setup Steps: Azure AD Application (Source)
+Follow this checklist to configure the Source connection properly.
+
+1.  **Register App**:
+    *   Navigate to **Azure Portal > App Registrations > New Registration**.
+    *   Name: `Google-Workspace-Migrate-Source`.
+    *   Supported Account Types: `Accounts in this organizational directory only`.
+    *   Redirect URI: Leave blank (Web).
+
+2.  **Authentication**:
+    *   Go to **Certificates & secrets > New client secret**.
+    *   Description: `GWM-Secret-Key`.
+    *   Expires: `24 months` (or aligning with project duration).
+    *   **Action**: Copy the `Value` immediately (it will be hidden later).
+
+3.  **API Permissions**:
+    *   Go to **API Permissions > Add a permission > Microsoft Graph**.
+    *   Select **Application permissions** (NOT Delegated).
+    *   Search for and check the permissions listed in Section 2 (Directory.Read.All, Mail.Read, etc.).
+    *   Click **Add permissions**.
+
+4.  **Grant Consent**:
+    *   **CRITICAL STEP**: Click **Grant admin consent for [Tenant Name]** button at the top of the permissions list.
+    *   Status column must show green checkmarks for all rows.
+
+5.  **Gather IDs for GWM**:
+    *   `Application (client) ID` (Overview blade)
+    *   `Directory (tenant) ID` (Overview blade)
+    *   `Client Secret Value` (from Step 2)
