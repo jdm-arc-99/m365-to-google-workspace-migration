@@ -75,3 +75,39 @@ Stakeholders often ask: *"Why use Google Workspace Migrate (GWM) instead of a Sa
 
 **Conclusion:** GWM is selected to maximize security control and cost efficiency, despite the higher initial infrastructure setup complexity.
 
+## 7. Advanced Mitigations & Specialized Tools ("Break Glass" Options)
+
+Migration is complex, and sometimes the standard path involves roadblocks. Below are industry-standard "workarounds" and specialized tools used to overcome specific pitfalls.
+
+### A. Overcoming Throttling & Speed Issues
+*   **The "EWS Throttling Policy" Lift (Source):**
+    *   *Technique:* Request Microsoft Support (via Ticket) to temporarily relax EWS throttling policies for the migration duration (typically 30-90 days).
+    *   *Result:* Can increase throughput by 2-3x during peak transfer times.
+*   **Scaled Service Accounts (Destination):**
+    *   *Technique:* Instead of using one Service Account for all data, shard the migration across 10-20 Service Accounts.
+    *   *Implementation:* GWM handles this natively if configured with multiple "Target Connectors".
+
+### B. High-Fidelity Content (OneNote & SharePoint)
+*   **Problem:** GWM and native tools often convert OneNote to flat PDFs or mess up complex SharePoint pages.
+*   **Alternative Tooling:**
+    *   **AvePoint Fly / ShareGate:** These paid tools have specialized engines for **Microsoft 365 -> Google** that offer higher fidelity for *specific* workloads.
+    *   *Strategy:* If a department (e.g., Legal, Research) refuses to lose OneNote structure, purchase a **tactical license** of AvePoint/ShareGate just for that team (e.g., 50 users), while migrating the other 4,950 users via GWM.
+
+### C. Large File Handling (>25GB or Deep Paths)
+*   **Rclone (The "Swiss Army Knife"):**
+    *   *Technique:* For localized large datasets (e.g., a Media Team's video archive), use `rclone` (open source command line tool) on a dedicated VM.
+    *   *Command:* `rclone copy onedrive:VideoArchive google:SharedDrive/VideoArchive --transfers=16`.
+    *   *Benefit:* Bypasses some of the overhead of heavy migration GUIs and handles large files/retries robustly.
+*   **Physical Data Transfer (Uncommon now):**
+    *   For Petabyte-scale, Google offers a **Transfer Appliance** (rack-mountable server shipped to your data center), but for M365 cloud-to-cloud, this is rarely applicable.
+
+### D. Managing "User Behavior" Risks
+*   **The "Read-Only" Lock:**
+    *   *Technique:* Run a PowerShell script to set M365 mailboxes and OneDrive to "Read-Only" at the exact moment of cutover.
+    *   *Benefit:* Prevents the "User Upload Loop" where users keep working in the old system, creating data gaps.
+    ```powershell
+    Set-Mailbox -Identity user@example.com -MaxSizeSend 0KB -MaxSizeReceive 0KB
+    Set-SPOSite -Identity https://tenant-my.sharepoint.com/personal/user_example_com -LockState ReadOnly
+    ```
+
+
