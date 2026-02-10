@@ -17,9 +17,11 @@ Used for mailbox statistics and forwarding configuration.
 
 | Role / Cmdlet | Purpose |
 |---------------|---------|
-| **View-Only Recipients** | `Get-Mailbox` | To export mailbox sizes and item counts. |
-| **Mail Recipients** | `Set-Mailbox` | To configure forwarding (if using forwarding address routing). |
+| **Organization Management** | `Set-Mailbox` | **Super Admin for Exchange**. Full access to all configuration and data. |
+| **Recipient Management** | `Set-Mailbox` | Sufficient for configuring forwarding addresses on user mailboxes. |
+| **View-Only Organization Management** | `Get-Mailbox` | Read-only access to all configuration (safest for assessment). |
 
 ## 3. Azure AD Roles
 - **Global Reader**: Sufficient for most read-only assessment scripts.
 - **User Administrator**: Required if the script creates "Mail Contacts" for co-existence.
+- **Global Administrator**: The "Super Admin" for the entire tenant. Includes full Exchange access implicitly.
